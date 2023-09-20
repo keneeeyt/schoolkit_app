@@ -1,26 +1,14 @@
 <?php 
 
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "student_system";
+include_once('connections/connection.php');
+
+$connect = connection();
 
 
-$connect = new mysqli ($host, $username, $password, $database);
-
-if($connect -> connect_error){
-    echo $connect -> connect_error;
-} 
-
-$sql = "SELECT * FROM student_list";
+$sql = "SELECT * FROM student_list ORDER BY id DESC";
 $students = $connect->query($sql) or die ($connect->error);
 $row = $students->fetch_assoc();
-
-// do{
-
-//     echo $row['first_name'] . " " . $row['last_name']. "<br />";
-
-// }while($row = $students->fetch_assoc()); 
+ 
 ?>
 
 <!DOCTYPE html>
@@ -29,36 +17,15 @@ $row = $students->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Management System</title>
-
-    <style>
-    body{
-        font-family: "Arial"; 
-    }
-    h1 {
-        text-align: center;
-    }
-    table {
-        border: 1px solid black;
-       border-collapse: collapse;
-       width: 100%;
-    }
-    th, td {
-        border-bottom: 1px solid #ddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even){
-        background-color: #f2f2f2;
-    }
-    </style>
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <h1>Student Management System</h1>
     <br />
     <br />
+    
+    <a href="add.php">Add new</a>
     <table>
         <thead>
             <tr>
