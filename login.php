@@ -17,7 +17,14 @@ if(isset($_POST['login'])){
     $row = $user->fetch_assoc();
     $total = $user->num_rows;
 
-    echo $total;
+    if($total > 0){
+        $_SESSION['UserLogin'] = $row['username'];
+        $_SESSION['Access'] = $row['access'];
+
+        echo header("Location: index.php");
+    } else {
+        echo "No user found.";
+    }
 }
 
 ?>

@@ -1,5 +1,15 @@
 <?php 
 
+if(!isset($_SESSION)){
+    session_start();
+}
+
+if(isset($_SESSION['UserLogin'])){
+    echo 'Welcome '.$_SESSION['UserLogin'];
+} else {
+    echo 'Welcome Guest';
+}
+
 include_once('connections/connection.php');
 
 $connect = connection();
@@ -24,13 +34,19 @@ $row = $students->fetch_assoc();
     <h1>Student Management System</h1>
     <br />
     <br />
-    
+    <?php if(isset($_SESSION['UserLogin'])) { ?>
+        <a href="logout.php">Logout</a>
+    <?php } else { ?>
+        <a href="login.php">Login</a>
+    <?php } ?>
     <a href="add.php">Add new</a>
+    
     <table>
         <thead>
             <tr>
                 <th>Firstname</th>
                 <th>Lastname</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +54,7 @@ $row = $students->fetch_assoc();
                 <tr>
                     <td><?php echo $row['first_name'] ?></td>
                     <td><?php echo $row['last_name'] ?></td>
+                    <td><a href="details.php?ID=<?php echo $row['id'] ?>">View</a></td>
                 </tr>
             <?php }while($row = $students->fetch_assoc()) ?>    
         </tbody>
